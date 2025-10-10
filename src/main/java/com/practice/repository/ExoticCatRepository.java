@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CatRepository extends JpaRepository<ExoticCat, Long> {
+public interface ExoticCatRepository extends JpaRepository<ExoticCat, Long> {
     
     // Custom query to find cats by breed (category search requirement)
     List<ExoticCat> findByBreed(String breed);
