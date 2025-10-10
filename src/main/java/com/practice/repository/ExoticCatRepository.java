@@ -15,6 +15,6 @@ public interface ExoticCatRepository extends JpaRepository<ExoticCat, Long> {
     List<ExoticCat> findByBreed(String breed);
     
     // Custom query to find cats whose name contains a string (case-insensitive)
-    @Query("SELECT c FROM Cat c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    @Query("SELECT c FROM ExoticCat c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<ExoticCat> findByNameContaining(@Param("name") String name);
 }
