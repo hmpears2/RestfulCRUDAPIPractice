@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exotic Cats Gallery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-light">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="index.html">
+                Exotic Cats Gallery
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="details.html">Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="new-animal-form.html">Add New Cat</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="detail-hero-bg text-white py-5">
+        <div class="container text-center py-5">
+            <h1 class="display-4 fw-bold mb-4">Exotic Domesticated Cats Gallery</h1>
+            <p class="lead fs-3">Discover the beauty and wonder of rare feline companions</p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row mb-5">
+            <div class="col-md-8 col-lg-6 mx-auto">
+                <div class="input-group input-group-lg shadow-sm">
+                    <span class="input-group-text bg-primary text-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control" id="searchInput"
+                        placeholder="Search cats by name, breed, or origin...">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="bi bi-x-circle"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4" id="catGallery">
+            <!-- Serval Cat -->
+            <div class="col-lg-6 col-xl-4 cat-card" data-name="serval" data-breed="serval" data-origin="africa">
+                <div class="card h-100 shadow border-0">
+                    <img src="images/serval - cat.jpg" class="card-img-top" alt="Serval Cat">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">
+                            Serval
+                        </h5>
+                        <div class="mb-3">
+                            <span class="badge bg-secondary me-1">Africa</span>
+                            <span class="badge bg-info">Medium-Large</span>
+                        </div>
+                        <ul class="list-unstyled small text-muted">
+                            <li><strong>Size:</strong> 20-40 lbs</li>
+                            <li><strong>Lifespan:</strong> 15-20 years</li>
+                        </ul>
+                        <p class="card-text flex-grow-1">Known for their spotted coat and long legs, Servals are
+                            athletic cats with exceptional jumping abilities. They require experienced owners and proper
+                            permits.</p>
+                        <a href="details.html" class="btn btn-primary mt-auto">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canadian Lynx -->
+            <div class="col-lg-6 col-xl-4 cat-card" data-name="canadian lynx" data-breed="lynx" data-origin="canada">
+                <div class="card h-100 shadow border-0">
+                    <img src="images/canadian lynx - cat1.jpeg" class="card-img-top" alt="Canadian Lynx">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">
+                            Canadian Lynx
+                        </h5>
+                        <div class="mb-3">
+                            <span class="badge bg-secondary me-1">Canada & Northern US</span>
+                            <span class="badge bg-info">Medium</span>
+                        </div>
+                        <ul class="list-unstyled small text-muted">
+                            <li><strong>Size:</strong> 18-25 lbs</li>
+                            <li><strong>Lifespan:</strong> 10-15 years</li>
+                        </ul>
+                        <p class="card-text flex-grow-1">With their distinctive ear tufts and large paws, Canadian Lynx
+                            are adapted for snowy climates. They have a calm temperament but require special care.</p>
+                        <a href="details.html" class="btn btn-primary mt-auto">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Savannah Cat -->
+            <div class="col-lg-6 col-xl-4 cat-card" data-name="savannah" data-breed="savannah" data-origin="usa">
+                <div class="card h-100 shadow border-0">
+                    <img src="images/savannah - cat1.JPG" class="card-img-top" alt="Savannah Cat">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">
+                            Savannah Cat
+                        </h5>
+                        <div class="mb-3">
+                            <span class="badge bg-secondary me-1">USA (Serval Hybrid)</span>
+                            <span class="badge bg-success">Large</span>
+                        </div>
+                        <ul class="list-unstyled small text-muted">
+                            <li><strong>Size:</strong> 12-25 lbs</li>
+                            <li><strong>Lifespan:</strong> 12-20 years</li>
+                        </ul>
+                        <p class="card-text flex-grow-1">A cross between domestic cats and African Servals, Savannahs
+                            are active, intelligent, and loyal. They love water and can be leash trained.</p>
+                        <a href="details.html" class="btn btn-primary mt-auto">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bengal Cat -->
+            <div class="col-lg-6 col-xl-4 cat-card" data-name="bengal" data-breed="bengal" data-origin="usa">
+                <div class="card h-100 shadow border-0">
+                    <img src="images/bengal - cat.jpg" class="card-img-top" alt="Bengal Cat">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">
+                            Bengal Cat
+                        </h5>
+                        <div class="mb-3">
+                            <span class="badge bg-secondary me-1">USA (Asian Leopard Cat Hybrid)</span>
+                            <span class="badge bg-info">Medium-Large</span>
+                        </div>
+                        <ul class="list-unstyled small text-muted">
+                            <li><strong>Size:</strong> 8-15 lbs</li>
+                            <li><strong>Lifespan:</strong> 12-16 years</li>
+                        </ul>
+                        <p class="card-text flex-grow-1">Bengals have stunning leopard-like markings and high energy
+                            levels. They're intelligent, playful, and often enjoy water activities.</p>
+                        <a href="details.html" class="btn btn-primary mt-auto">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maine Coon -->
+            <div class="col-lg-6 col-xl-4 cat-card" data-name="maine coon" data-breed="maine coon" data-origin="usa">
+                <div class="card h-100 shadow border-0">
+                    <img src="images/maine coon - cat.jpg" class="card-img-top" alt="Maine Coon Cat">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">
+                            Maine Coon
+                        </h5>
+                        <div class="mb-3">
+                            <span class="badge bg-secondary me-1">Maine, USA</span>
+                            <span class="badge bg-success">Large</span>
+                        </div>
+                        <ul class="list-unstyled small text-muted">
+                            <li><strong>Size:</strong> 13-25 lbs</li>
+                            <li><strong>Lifespan:</strong> 12-15 years</li>
+                        </ul>
+                        <p class="card-text flex-grow-1">Known as "gentle giants," Maine Coons are one of the largest
+                            domestic cat breeds. They're friendly, intelligent, and have distinctive lynx-like ear
+                            tufts.</p>
+                        <a href="details.html" class="btn btn-primary mt-auto">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caracal Cat -->
+            <div class="col-lg-6 col-xl-4 cat-card" data-name="caracal" data-breed="caracal" data-origin="africa">
+                <div class="card h-100 shadow border-0">
+                    <img src="images/caracal - cat.jpg" class="card-img-top" alt="Caracal Cat">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">
+                            Caracal
+                        </h5>
+                        <div class="mb-3">
+                            <span class="badge bg-secondary me-1">Africa & Asia</span>
+                            <span class="badge bg-success">Medium-Large</span>
+                        </div>
+                        <ul class="list-unstyled small text-muted">
+                            <li><strong>Size:</strong> 25-50 lbs</li>
+                            <li><strong>Lifespan:</strong> 12-17 years</li>
+                        </ul>
+                        <p class="card-text flex-grow-1">Distinctive black-tufted ears and reddish-gold coat make
+                            Caracals striking. They're powerful jumpers and require experienced handlers with proper
+                            facilities.</p>
+                        <a href="details.html" class="btn btn-primary mt-auto">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</html>

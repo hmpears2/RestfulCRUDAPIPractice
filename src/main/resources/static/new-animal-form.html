@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Cat - Exotic Cats Gallery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="index.html">
+            Exotic Cats Gallery
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="details.html">Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="new-animal-form.html">Add New Cat</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <i class="bi bi-plus-circle text-primary display-4 mb-3"></i>
+                <h1 class="display-5 fw-bold">Add New Exotic Cat</h1>
+                <p class="lead text-muted">Help us expand our gallery by submitting information about an exotic cat
+                    species.</p>
+            </div>
+
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-form me-2"></i>Cat Information Form</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="newCatForm" novalidate>
+                        <!-- Basic Information -->
+                        <h5 class="text-primary mb-3"><i class="bi bi-info-circle me-2"></i>Basic Information</h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="catName" class="form-label fw-bold">Cat Name/Species *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                                    <input type="text" class="form-control" id="catName" name="catName" required
+                                        placeholder="e.g., Siberian Lynx">
+                                    <div class="invalid-feedback">Please provide a cat name or species.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="breed" class="form-label fw-bold">Breed/Classification *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-collection"></i></span>
+                                    <input type="text" class="form-control" id="breed" name="breed" required
+                                        placeholder="e.g., Lynx">
+                                    <div class="invalid-feedback">Please provide the breed or classification.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="origin" class="form-label fw-bold">Origin/Native Region *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                    <input type="text" class="form-control" id="origin" name="origin" required
+                                        placeholder="e.g., Siberia, Russia">
+                                    <div class="invalid-feedback">Please provide the origin or native region.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="size" class="form-label fw-bold">Size Category *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-rulers"></i></span>
+                                    <select class="form-select" id="size" name="size" required>
+                                        <option value="">Choose size...</option>
+                                        <option value="Small (5-10 lbs)">Small (5-10 lbs)</option>
+                                        <option value="Medium (10-20 lbs)">Medium (10-20 lbs)</option>
+                                        <option value="Medium-Large (20-30 lbs)">Medium-Large (20-30 lbs)</option>
+                                        <option value="Large (30+ lbs)">Large (30+ lbs)</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a size category.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="lifespan" class="form-label fw-bold">Average Lifespan *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-calendar-heart"></i></span>
+                                    <input type="text" class="form-control" id="lifespan" name="lifespan" required
+                                        placeholder="e.g., 12-15 years">
+                                    <div class="invalid-feedback">Please provide the average lifespan.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="conservationStatus" class="form-label fw-bold">Conservation Status</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-shield-check"></i></span>
+                                    <select class="form-select" id="conservationStatus" name="conservationStatus">
+                                        <option value="">Choose status...</option>
+                                        <option value="Least Concern">Least Concern</option>
+                                        <option value="Near Threatened">Near Threatened</option>
+                                        <option value="Vulnerable">Vulnerable</option>
+                                        <option value="Endangered">Endangered</option>
+                                        <option value="Critically Endangered">Critically Endangered</option>
+                                        <option value="Extinct in Wild">Extinct in Wild</option>
+                                        <option value="Not Evaluated">Not Evaluated</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Information -->
+                        <h5 class="text-primary mb-3 mt-4"><i class="bi bi-file-text me-2"></i>Detailed Information</h5>
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-bold">Description *</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required
+                                placeholder="Provide a detailed description of the cat's appearance, behavior, and characteristics..."></textarea>
+                            <div class="invalid-feedback">Please provide a description.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="careRequirements" class="form-label fw-bold">Care Requirements</label>
+                            <textarea class="form-control" id="careRequirements" name="careRequirements" rows="3"
+                                placeholder="Describe special care needs, housing requirements, diet, etc..."></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="bi bi-check-circle me-2"></i>Submit New Cat
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
