@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/cats")
@@ -30,50 +32,90 @@ public class ExoticCatController {
     
     // View: Get one cat by ID (displays cat-details.ftlh)
     @GetMapping("/{id}")
-    public String getCatById(@PathVariable Long id, Model model) {
-        ExoticCat cat = exoticCatService.getCatById(id)
-                .orElseThrow(() -> new RuntimeException("Cat not found with id: " + id));
-        model.addAttribute("cat", cat);
+    public String getCatById(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        Optional<ExoticCat> catOptional = exoticCatService.getCatById(id);
+        
+        if (catOptional.isEmpty()) {
+            // Cat not found - redirect to list with error message
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Cat with ID " + id + " not found.");
+            return "redirect:/cats";
+        }
+        
+        model.addAttribute("cat", catOptional.get());
         return "cat-details";
     }
     
-    // View: Show created form (displays cat-create.ftlh)
+    // View: Show create form (displays cat-create.ftlh)
     @GetMapping("/new")
     public String showCreateForm() {
         return "cat-create";
     }
     
-    // Handle create form submission (action)
+    // Action: Handle create form submission
     @PostMapping("/new")
-    public String createCat(ExoticCat cat) {
+    public String createCat(ExoticCat cat, RedirectAttributes redirectAttributes) {
         ExoticCat savedCat = exoticCatService.addCat(cat);
+        redirectAttributes.addFlashAttribute("successMessage", 
+            "Cat '" + savedCat.getName() + "' added successfully!");
         return "redirect:/cats/" + savedCat.getExoticCatId();
     }
-
-    // View: Show updated form (displays cat-update.ftlh)
+    
+    // View: Show update form (displays cat-update.ftlh)
     @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
-        ExoticCat cat = exoticCatService.getCatById(id)
-                .orElseThrow(() -> new RuntimeException("Cat not found with id: " + id));
-        model.addAttribute("cat", cat);
+    public String showUpdateForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        Optional<ExoticCat> catOptional = exoticCatService.getCatById(id);
+        
+        if (catOptional.isEmpty()) {
+            // Cat not found - redirect to list with error message
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Cat with ID " + id + " not found.");
+            return "redirect:/cats";
+        }
+        
+        model.addAttribute("cat", catOptional.get());
         return "cat-update";
     }
     
-    // Handle update form submission (action)
+    // Action: Handle update form submission
     @PostMapping("/update")
-    public String updateCat(ExoticCat cat) {
-        ExoticCat updatedCat = exoticCatService.updateCat(cat.getExoticCatId(), cat);
-        return "redirect:/cats/" + updatedCat.getExoticCatId();
+    public String updateCat(ExoticCat cat, RedirectAttributes redirectAttributes) {
+        try {
+            ExoticCat updatedCat = exoticCatService.updateCat(cat.getExoticCatId(), cat);
+            redirectAttributes.addFlashAttribute("successMessage", 
+                "Cat '" + updatedCat.getName() + "' updated successfully!");
+            return "redirect:/cats/" + updatedCat.getExoticCatId();
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Error updating cat: " + e.getMessage());
+            return "redirect:/cats";
+        }
     }
     
-    // Delete cat (action)
+    // Action: Delete cat
     @GetMapping("/delete/{id}")
-    public String deleteCat(@PathVariable Long id) {
-        exoticCatService.deleteCat(id);
+    public String deleteCat(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Optional<ExoticCat> catOptional = exoticCatService.getCatById(id);
+            
+            if (catOptional.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", 
+                    "Cat with ID " + id + " not found.");
+                return "redirect:/cats";
+            }
+            
+            String catName = catOptional.get().getName();
+            exoticCatService.deleteCat(id);
+            redirectAttributes.addFlashAttribute("successMessage", 
+                "Cat '" + catName + "' deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Error deleting cat: " + e.getMessage());
+        }
         return "redirect:/cats";
     }
-
-    // Search cats by breed
+    
+    // EXTRA CREDIT: Get cats by breed
     @GetMapping("/breed/{breed}")
     public String getCatsByBreed(@PathVariable String breed, Model model) {
         List<ExoticCat> cats = exoticCatService.getCatsByBreed(breed);
@@ -83,7 +125,7 @@ public class ExoticCatController {
         return "cat-list";
     }
     
-    // Search cats by name
+    // EXTRA CREDIT: Search cats by name
     @GetMapping("/search")
     public String searchCatsByName(@RequestParam String name, Model model) {
         List<ExoticCat> cats = exoticCatService.getCatsByNameContaining(name);

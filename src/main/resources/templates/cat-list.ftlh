@@ -26,6 +26,22 @@
     </nav>
 
     <div class="container mt-5">
+        <!-- SUCCESS MESSAGE ALERT -->
+        <#if successMessage??>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> ${successMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </#if>
+        
+        <!-- ERROR MESSAGE ALERT -->
+        <#if errorMessage??>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> ${errorMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </#if>
+
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>All Exotic Cats</h1>
             <a href="/cats/new" class="btn btn-success">+ Add New Cat</a>
@@ -46,6 +62,7 @@
             </form>
         </div>
 
+        <!-- Display filter info if searching/filtering -->
         <#if filterType??>
             <div class="alert alert-info">
                 Showing results for <strong>${filterType}</strong>: "${filterValue}"

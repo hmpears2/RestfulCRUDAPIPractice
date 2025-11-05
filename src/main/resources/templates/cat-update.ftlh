@@ -14,6 +14,14 @@
     </nav>
 
     <div class="container mt-5">
+        <!-- ERROR MESSAGE (in case form submission fails) -->
+        <#if errorMessage??>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> ${errorMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </#if>
+
         <div class="card">
             <div class="card-header bg-warning">
                 <h1 class="mb-0">Update ${cat.name}</h1>

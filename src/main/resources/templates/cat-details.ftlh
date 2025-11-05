@@ -19,6 +19,22 @@
     </nav>
 
     <div class="container mt-5">
+        <!-- SUCCESS MESSAGE ALERT -->
+        <#if successMessage??>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> ${successMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </#if>
+        
+        <!-- ERROR MESSAGE ALERT -->
+        <#if errorMessage??>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> ${errorMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </#if>
+
         <div class="card detail-card">
             <div class="card-header bg-primary text-white">
                 <h1 class="mb-0">${cat.name}</h1>
