@@ -3,15 +3,16 @@ package com.practice.controller;
 import com.practice.entity.ExoticCat;
 import com.practice.service.ExoticCatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/cats")
-@CrossOrigin(origins = "*") // Allow frontend to connect
+@Controller
+@RequestMapping("/cats")
 public class ExoticCatController {
     
     private final ExoticCatService exoticCatService;
@@ -21,54 +22,116 @@ public class ExoticCatController {
         this.exoticCatService = exoticCatService;
     }
     
-    // Get all cats
+    // View: Get all cats (displays cat-list.ftlh)
     @GetMapping
-    public ResponseEntity<List<ExoticCat>> getAllCats() {
-        return ResponseEntity.ok(exoticCatService.getAllCats());
+    public String getAllCats(Model model) {
+        List<ExoticCat> cats = exoticCatService.getAllCats();
+        model.addAttribute("catList", cats);
+        return "cat-list";
     }
     
-    // Get cat by ID
+    // View: Get one cat by ID (displays cat-details.ftlh)
     @GetMapping("/{id}")
-    public ResponseEntity<ExoticCat> getCatById(@PathVariable Long id) {
-        return exoticCatService.getCatById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public String getCatById(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        Optional<ExoticCat> catOptional = exoticCatService.getCatById(id);
+        
+        if (catOptional.isEmpty()) {
+            // Cat not found - redirect to list with error message
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Cat with ID " + id + " not found.");
+            return "redirect:/cats";
+        }
+        
+        model.addAttribute("cat", catOptional.get());
+        return "cat-details";
     }
     
-    // Add new cat (handles form submission from new-animal-form.html)
-    @PostMapping
-    public ResponseEntity<ExoticCat> addCat(@RequestBody ExoticCat cat) {
+    // View: Show create form (displays cat-create.ftlh)
+    @GetMapping("/new")
+    public String showCreateForm() {
+        return "cat-create";
+    }
+    
+    // Action: Handle create form submission
+    @PostMapping("/new")
+    public String createCat(ExoticCat cat, RedirectAttributes redirectAttributes) {
         ExoticCat savedCat = exoticCatService.addCat(cat);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCat);
+        redirectAttributes.addFlashAttribute("successMessage", 
+            "Cat '" + savedCat.getName() + "' added successfully!");
+        return "redirect:/cats/" + savedCat.getExoticCatId();
     }
     
-    // Update existing cat
-    @PutMapping("/{id}")
-    public ResponseEntity<ExoticCat> updateCat(@PathVariable Long id, @RequestBody ExoticCat cat) {
+    // View: Show update form (displays cat-update.ftlh)
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        Optional<ExoticCat> catOptional = exoticCatService.getCatById(id);
+        
+        if (catOptional.isEmpty()) {
+            // Cat not found - redirect to list with error message
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Cat with ID " + id + " not found.");
+            return "redirect:/cats";
+        }
+        
+        model.addAttribute("cat", catOptional.get());
+        return "cat-update";
+    }
+    
+    // Action: Handle update form submission
+    @PostMapping("/update")
+    public String updateCat(ExoticCat cat, RedirectAttributes redirectAttributes) {
         try {
-            ExoticCat updatedCat = exoticCatService.updateCat(id, cat);
-            return ResponseEntity.ok(updatedCat);
+            ExoticCat updatedCat = exoticCatService.updateCat(cat.getExoticCatId(), cat);
+            redirectAttributes.addFlashAttribute("successMessage", 
+                "Cat '" + updatedCat.getName() + "' updated successfully!");
+            return "redirect:/cats/" + updatedCat.getExoticCatId();
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Error updating cat: " + e.getMessage());
+            return "redirect:/cats";
         }
     }
     
-    // Delete cat
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCat(@PathVariable Long id) {
-        exoticCatService.deleteCat(id);
-        return ResponseEntity.noContent().build();
+    // Action: Delete cat
+    @GetMapping("/delete/{id}")
+    public String deleteCat(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Optional<ExoticCat> catOptional = exoticCatService.getCatById(id);
+            
+            if (catOptional.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", 
+                    "Cat with ID " + id + " not found.");
+                return "redirect:/cats";
+            }
+            
+            String catName = catOptional.get().getName();
+            exoticCatService.deleteCat(id);
+            redirectAttributes.addFlashAttribute("successMessage", 
+                "Cat '" + catName + "' deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Error deleting cat: " + e.getMessage());
+        }
+        return "redirect:/cats";
     }
     
-    // Get cats by breed (for category filtering - matches your breed attribute)
+    // EXTRA CREDIT: Get cats by breed
     @GetMapping("/breed/{breed}")
-    public ResponseEntity<List<ExoticCat>> getCatsByBreed(@PathVariable String breed) {
-        return ResponseEntity.ok(exoticCatService.getCatsByBreed(breed));
+    public String getCatsByBreed(@PathVariable String breed, Model model) {
+        List<ExoticCat> cats = exoticCatService.getCatsByBreed(breed);
+        model.addAttribute("catList", cats);
+        model.addAttribute("filterType", "breed");
+        model.addAttribute("filterValue", breed);
+        return "cat-list";
     }
     
-    // Get cats whose name contains a string (for search functionality)
+    // EXTRA CREDIT: Search cats by name
     @GetMapping("/search")
-    public ResponseEntity<List<ExoticCat>> searchCatsByName(@RequestParam String name) {
-        return ResponseEntity.ok(exoticCatService.getCatsByNameContaining(name));
+    public String searchCatsByName(@RequestParam String name, Model model) {
+        List<ExoticCat> cats = exoticCatService.getCatsByNameContaining(name);
+        model.addAttribute("catList", cats);
+        model.addAttribute("filterType", "search");
+        model.addAttribute("filterValue", name);
+        return "cat-list";
     }
 }

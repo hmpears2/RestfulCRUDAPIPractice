@@ -1,6 +1,9 @@
 # RestfulCRUDAPIPractice
 Building restful CRUD API's for previously created animal gallery.
 
+Link to MVC Demo:
+https://uncg.instructuremedia.com/embed/28656268-d847-491e-b6f1-e0d1f46c3778
+
 Link to Demo: 
 https://uncg.instructuremedia.com/embed/2281c901-f8e8-44ac-9739-0a0fe79c0886
 
